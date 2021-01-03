@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class studentDAO {
 	private Connection conn;	
@@ -25,6 +27,34 @@ public class studentDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public JTable ShowTable(JTable table) {
+		DefaultTableModel model = new DefaultTableModel();
+		//열 이름
+		model.addColumn("학번 ");
+		model.addColumn("이름");
+		model.addColumn("호실");
+	
+		try {
+			String SQL = "Select * from student;";
+			pstmt = conn.prepareStatement(SQL);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){ //데이터가 끝날때까지 반복
+				//행
+				model.addRow(new Object [] {
+						rs.getString("student_id"),
+						rs.getString("name"),
+						rs.getString("room")
+				});
+			}
+			table.setModel(model);
+		}
+		catch(Exception e3){
+			e3.printStackTrace();
+		}
+		return null;
 	}
 	
 	public boolean login(String id, String name, String room) {

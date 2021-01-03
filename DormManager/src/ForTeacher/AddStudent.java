@@ -1,10 +1,12 @@
 package ForTeacher;
 
+import java.awt.CardLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -17,9 +19,17 @@ public class AddStudent extends JPanel implements ActionListener{
 	private JTextField nameText;
 	private JTextField roomText;
 	JButton AddButton = new JButton("Add");
+	
+	private CardLayout cl;
+	private JFrame frame;
+	private MainSelect mainSelect;
 
 	
-	public AddStudent(Object o) {
+	public AddStudent(Object o, CardLayout cl, JFrame frame, MainSelect mainSelect) {
+		this.cl = cl;
+		this.frame = frame;
+		this.mainSelect = mainSelect;
+		
 		idText = new JTextField();
 		idText.setBounds(242, 101, 214, 27);
 		add(idText);
@@ -63,6 +73,8 @@ public class AddStudent extends JPanel implements ActionListener{
 		
 		if(e.getSource() == AddButton) {
 			studentDAO.addStudent(idText.getText(), nameText.getText(), roomText.getText());
+			cl.show(frame.getContentPane(), "mainSelect"); // ranking패널을 카드레이아웃 최상단으로 변경
+			mainSelect.requestFocus();
 		}
 		
 	}
