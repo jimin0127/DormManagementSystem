@@ -1,38 +1,25 @@
-package ForStudent;
+package ForTeacher;
 
-import java.awt.CardLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import DAO.studentDAO;
 
-public class LoginPanel extends JPanel implements ActionListener{
+public class AddStudent extends JPanel implements ActionListener{
 	
-	public static int id;
 	private JTextField idText;
 	private JTextField nameText;
 	private JTextField roomText;
-	JButton loginButton = new JButton("Login");
-	
-	private CardLayout cl;
-	private JFrame frame;
-	private MainSelect mainSelect;
+	JButton AddButton = new JButton("Add");
 
-
-//	private Image scrennImage;//더플버퍼링 막는
-//	private Graphics screenGraphic;//더플버퍼링 막는
 	
-	public LoginPanel(Object o, CardLayout cl, JFrame frame, MainSelect mainSelect) {
-		this.cl = cl;
-		this.frame = frame;
-		this.mainSelect = mainSelect;
+	public AddStudent(Object o) {
 		idText = new JTextField();
 		idText.setBounds(242, 101, 214, 27);
 		add(idText);
@@ -63,26 +50,22 @@ public class LoginPanel extends JPanel implements ActionListener{
 		roomLabel.setBounds(166, 285, 62, 18);
 		add(roomLabel);
 			
-		loginButton.setFont(new Font("한컴산뜻돋움", Font.PLAIN, 21));
-		loginButton.setBounds(479, 346, 145, 65);
-		loginButton.addActionListener(this);
-		add(loginButton);
+		AddButton.setFont(new Font("한컴산뜻돋움", Font.PLAIN, 21));
+		AddButton.setBounds(479, 346, 145, 65);
+		AddButton.addActionListener(this);
+		add(AddButton);
 		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		studentDAO studentDAO = new studentDAO();
 		
-		if(e.getSource() == loginButton) {
-			if(studentDAO.login(idText.getText(), nameText.getText(), roomText.getText())) {
-				cl.show(frame.getContentPane(), "mainSelect");
-				mainSelect.requestFocus();
-			} else {
-				
-			}
-		
+		if(e.getSource() == AddButton) {
+			studentDAO.addStudent(idText.getText(), nameText.getText(), roomText.getText());
 		}
+		
 	}
+
+
 }
